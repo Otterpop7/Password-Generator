@@ -27,14 +27,31 @@ function writePassword() {
     } else { //if something is selected this code runs
         var getFunctions = createArray(lower, upper, symbol, number);
 
-
-        for (var i = 0; i < length; i++) { //Make the Password
-            password = password + getCharacters(getFunctions)
+        while (true) { //loops to create password correctly (all array values that were selected are in password)
+            for (var i = 0; i < length; i++) { //Make the Password
+                password = password + getCharacters(getFunctions)
+            }
+            //checking if at least one of every selected character is in the password
+            if (((lower && randomLower) || !lower) &&
+                ((upper && randomUpper) || !upper) &&
+                ((symbol && randomSymbol) || !symbol) &&
+                ((number && randomNumber) || !number)) {
+                break;
+            }
+            //if not we reset the password string  
+            password = "";
+            // set all necessary variables to false so the previous "if" statement will work properly
+            randomLower = false;
+            randomUpper = false;
+            randomSymbol = false;
+            randomNumber = false;
         }
+        //writes password in text box
         var passwordText = document.querySelector('#password');
         passwordText.value = password;
     }
 }
+
 
 //length of password
 function getLength() {
